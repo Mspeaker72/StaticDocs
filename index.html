@@ -11,7 +11,10 @@
     var callAPI = (num_one, num_two, sign) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    //need to set headers when making requests , also remember to set cors in AWS getaway
     var raw = JSON.stringify({ "NumOne": parseInt(num_one), "NumTwo": parseInt(num_two), "sign": sign });
+    // the incoming post request requires two numbers and an operation
+    
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -28,6 +31,8 @@
             console.error('Error:', error);
             document.getElementById("result").innerHTML = `<p>Error: ${error.message}</p>`;
         });
+        // the lambda function holds the response before the .catch , only place to access it in the promise.
+        //DOM muniplulation 
 }
 
 </script>
