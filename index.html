@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AWSBsicCalc</title>
+</head>
+
+
+<script>
+    // define the callAPI function that takes a first name and last name as parameters
+    var callAPI = (num_one, num_two, sign) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({ "NumOne": parseInt(num_one), "NumTwo": parseInt(num_two), "sign": sign });
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+    fetch("https://36ezu7x857.execute-api.eu-north-1.amazonaws.com/Dev", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            var parsedResult = JSON.parse(result);
+            document.getElementById("result").innerHTML = `<p> The result : ${parsedResult.answer}</p>`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("result").innerHTML = `<p>Error: ${error.message}</p>`;
+        });
+}
+
+</script>
+
+<body style="background-color:gray">
+    
+
+    <form>
+
+        <p>
+            <label for="num_one">First_number:</label>
+        <input type="number" id="num_one" name="num_one">
+
+        
+        
+        
+        <label for="operation">operation:</label>
+        <input type="text"  id="operation" name="operation">
+        
+        
+        <label for="num_two">Second_Number:</label>
+        <input type="number" id="num_two">
+         
+        <input type="button" value="=" onclick="callAPI(document.getElementById('num_one').value,
+        document.getElementById('num_two').value,document.getElementById('operation').value)" style="color: greenyellow;">
+
+    </p>
+    </form>
+
+   
+<div id="result"></div>
+
+
+</body>
+</html>
